@@ -1,15 +1,18 @@
 const express = require('express');
-const dotenv = require('dotenv'); 
-dotenv.config(); 
+const dotenv = require('dotenv');
+const prisma = require('@prisma/client').PrismaClient;
 
+dotenv.config();
 const app = express();
+const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
 
-app.use(express.json()); 
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 
-const PORT = process.env.PORT || 3000;  
 app.listen(PORT, () => {
-  console.log(`Backend server is running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
-module.exports=  app;
+module.exports = app;
